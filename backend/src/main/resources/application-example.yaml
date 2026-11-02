@@ -1,0 +1,19 @@
+# Copy to application-local.yaml or export env vars before running.
+# Do NOT commit real passwords.
+
+server:
+  port: 8080
+
+spring:
+  mqtt:
+    username: your_emqx_user
+    password: your_emqx_password
+    url: tcp://localhost:1883
+    subClientId: mqtt_java_sub_01
+    pubClientId: mqtt_java_pub_01
+    subTopic: kg/wd,kg/sd,kg/gg,kg/dg,camera/frames,kg/wsd,ID1OUT,ID2OUT,ID3OUT
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/mqtt?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: your_mysql_password

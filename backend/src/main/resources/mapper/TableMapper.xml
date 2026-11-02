@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.mqtt.mapper.TableMapper">
+    <select id="getWsd" resultType="com.atguigu.mqtt.domain.wsd">
+        SELECT room AS id, time,wd AS temp, sd AS humi
+        FROM wsd
+        <where>
+            <if test="id != null">
+                AND room in (<foreach item="item" collection="id" separator=",">#{item}</foreach>)
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND time &lt;= #{endTime}
+            </if>
+            <if test="maxTemp != null or maxHumi != null">
+                AND (
+                <if test="maxTemp != null">
+                    wd &gt;= #{maxTemp}
+                </if>
+                <if test="maxTemp != null and maxHumi != null">
+                    OR
+                </if>
+                <if test="maxHumi != null">
+                    sd &gt;= #{maxHumi}
+                </if>
+                )
+            </if>
+        </where>
+        ORDER BY time DESC
+    </select>
+    <select id="getGg" resultType="com.atguigu.mqtt.domain.Figure">
+        SELECT room AS id, time, gg AS number
+        FROM gg
+        <where>
+        <if test="id != null">
+            AND room in (<foreach item="item" collection="id" separator=",">#{item}</foreach>)
+        </if>
+        <if test="startTime != null and startTime != ''">
+                AND time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+                AND time &lt;= #{endTime}
+        </if>
+        <if test="maxLight != null">
+            AND gg &gt;= #{maxLight}
+        </if>
+        </where>
+        ORDER BY time DESC
+    </select>
+    <select id="getElectricity" resultType="com.atguigu.mqtt.domain.Electricity">
+        SELECT room AS id, time,current,voltage
+        FROM electricity
+        <where>
+        <if test="id != null">
+            AND room in (<foreach item="item" collection="id" separator=",">#{item}</foreach>)
+        </if>
+        <if test="startTime != null and startTime != ''">
+                AND time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+                AND time &lt;= #{endTime}
+        </if>
+            <if test="maxElec != null or maxVoltage != null">
+                AND (
+                <if test="maxElec != null">
+                    current &gt;= #{maxElec}
+                </if>
+                <if test="maxElec != null and maxVoltage != null">
+                    OR
+                </if>
+                <if test="maxVoltage != null">
+                    voltage &gt;= #{maxVoltage}
+                </if>
+                )
+            </if>
+        </where>
+        ORDER BY time DESC
+    </select>
+</mapper>

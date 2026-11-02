@@ -1,0 +1,14 @@
+package com.atguigu.mqtt.domain;
+
+import lombok.Data;
+
+import java.util.Date;
+
+@Data
+public class wsdDTO {
+    private int id;
+    private double temp;
+    private double humi;
+    private Date time;
+    private int byid ;
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.mqtt.mapper.SdMapper">
+    <select id="getSd" resultType="com.atguigu.mqtt.domain.Figure">
+        SELECT room AS id, time, sd AS number
+        FROM sd
+        <where>
+            <if test="id != null">
+                AND room = #{id}
+            </if>
+            <if test="min != null">
+                AND sd &gt;= #{min}
+            </if>
+            <if test="max != null">
+                AND sd &lt;= #{max}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND time &lt;= #{endTime}
+            </if>
+        </where>
+        ORDER BY time
+    </select>
+</mapper>
